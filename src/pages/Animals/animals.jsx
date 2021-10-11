@@ -1,15 +1,16 @@
 import React, { useEffect} from "react";
 import { useDispatch , useSelector} from "react-redux";
-import { getAllAnimals } from "../../redux/actions/Animals/animals.action";
+import { deleteAnimal, getAllAnimals } from "../../redux/actions/Animals/animals.action";
 
 import { Link } from "react-router-dom";
-import {Wrapper, Button, Table, ErrorMsg} from './animals.style'
+import {Wrapper, Button, Table, ErrorMsg, Excluir} from './animals.style'
 
 function Animals(){
     const dispatch = useDispatch()
     const animals = useSelector(state =>{
         return state.animals
     })
+    
     const {loading, error} = animals
     
     useEffect(()=>{
@@ -39,8 +40,12 @@ function Animals(){
                               <td>{animal.nome}</td>
                               <td>{animal.tipo}</td>
                               <td>{animal.peso}</td>
-                              <td><Link>Alterar</Link></td>
-                              <td><Link>Excluir</Link></td>
+                              <td><Link to={{pathname: "/animais/alterar",state:{animal}}}>Alterar</Link></td>
+                              <td><Excluir onClick={(e)=>{
+                                  e.preventDefault()
+                                  dispatch(deleteAnimal({id: animal.id}))
+
+                              }}>Excluir</Excluir></td>
                           </tr>
                       )
                     })}

@@ -53,6 +53,12 @@ export const Button = styled.button`
     ${buttonDefaultStyle}
     
 `
+
+export const Excluir = styled.a`
+    text-decoration: underline;
+    color: red;
+    cursor: pointer;
+`
 export const ErrorMsg = styled.span`
     display: block;
     text-align: center;

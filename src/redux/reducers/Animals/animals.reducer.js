@@ -5,6 +5,7 @@ const initialState = {
     animals: [],
     loading: false,
     error: null,
+    response: {}
 }
 export default function animals (state=initialState, action){
 
@@ -27,8 +28,15 @@ export default function animals (state=initialState, action){
                 loading: false,
                 error: action.error
             }
+        case type.DELETE_ANIMAL_ID_REQUESTED:
+                return {...state, loading: true}
+        case type.DELETE_ANIMAL_ID_SUCCESS:
+            const newAnimals = state.animals.filter(animal =>animal.id !== action.payload.id)
+            console.log(newAnimals, state);
+            return { ...state, animals: newAnimals,loading: false, response: action.response};
+        case type.DELETE_ANIMAL_ID_FAILED:
+                return { ...state, loading: false, error: action.error};
         default:
-            return state;
-
+                return state;
     }
 }

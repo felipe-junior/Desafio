@@ -13,10 +13,16 @@ const animalCreateReducer= function (state=initialState, action){
         case type.SAVE_ANIMAL_SUCCESS:
             return { loading: false, response: action.response};
         case type.SAVE_ANIMAL_FAILED:
-            console.log(action, "reducer")
+            return { ...state, loading: false, error: action.error};
+
+        case type.UPDATE_ANIMAL_ID_REQUESTED:
+            return {...state, loading: true}
+        case type.UPDATE_ANIMAL_ID_SUCCESS:
+            return { loading: false, response: action.response};
+        case type.UPDATE_ANIMAL_ID_FAILED:
             return { ...state, loading: false, error: action.error};
         default:
-            return state;
+            return state
     }
 }
 export default animalCreateReducer

@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useLocation } from "react-router";
 import { Input, InputPeso, InputDataNascimento, Fieldset, Label, InputGroup, SelectTipo, SaveButton, CancelButton, Form, ButtonGroup, Button, Response, SuccessMsg} from "./animalCreate.styles";
 import { Link } from "react-router-dom";
-import { saveAnimal } from "../../redux/actions/Animals/animals.action";
+import { saveAnimal, updateAnimal } from "../../redux/actions/Animals/animals.action";
 import { ErrorMsg } from "../Animals/animals.style";
 
 
 const showMessage = (status, loading, error)=>{
-    
     if(loading===true)
         return <span>Salvando...</span>
     if(error)
@@ -18,16 +17,29 @@ const showMessage = (status, loading, error)=>{
     if(status>=300 && status<200)
     return <ErrorMsg>Ocorreu um erro na solicitação, tente novamente</ErrorMsg> 
 }
-export default function AnimalCreate(){
+
+
+export default function AnimalCreate(props){
     const [animal, setAnimal] = useState({nome: "", tipo: "", peso:0, dataNascimento:""})
     const response = useSelector(state => state.animalPostResponse.response)
     const loading= useSelector(state => state.animalPostResponse.loading)
     const error= useSelector(state => state.animalPostResponse.error)
     const dispatch = useDispatch()
+    const location = useLocation()
+    console.log(location.state)
+    useEffect(()=>{
+        if(location.state){
+            const updateAnimal = location.state.animal
+            setAnimal(updateAnimal)
+        }  
+    }, [])
+   
     
     const handleChange = (e)=>setAnimal(prevState =>{
         return {...prevState, [e.target.name]:e.target.value}
-    })    
+    })
+
+
     return (
 
         <Form action="">
@@ -71,10 +83,14 @@ export default function AnimalCreate(){
             </Fieldset>
             <ButtonGroup>
                 <Link to="/animais"><Button>Voltar</Button></Link>
-                <CancelButton onClick={(e)=>null}>Cancelar</CancelButton>
+                <Link to="/animais"><CancelButton>Cancelar</CancelButton></Link>
                 <SaveButton onClick={(e)=>{
                     e.preventDefault()
-                    dispatch(saveAnimal(animal))
+                    if(!location.state)
+                        dispatch(saveAnimal(animal))
+                    else{
+                        dispatch(updateAnimal(animal))
+                    }
                 }}>Salvar</SaveButton>
             </ButtonGroup>
 

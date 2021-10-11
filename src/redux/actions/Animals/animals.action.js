@@ -12,3 +12,15 @@ export function saveAnimal(payload){
         payload: payload
     }
 }
+export function updateAnimal(payload){
+    return{
+        type: type.UPDATE_ANIMAL_ID_REQUESTED,
+        payload: payload
+    }
+}
+export function deleteAnimal(payload){
+    return{
+        type: type.DELETE_ANIMAL_ID_REQUESTED,
+        payload: payload
+    }
+}
