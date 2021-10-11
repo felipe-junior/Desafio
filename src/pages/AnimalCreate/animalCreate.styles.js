@@ -4,7 +4,7 @@ export const Form = styled.form`
     margin: 0 auto;
     padding: 20px;
     
-`
+    `
 export const Fieldset = styled.fieldset`
     display: flex;
     flex-direction: column;
@@ -14,7 +14,7 @@ export const Fieldset = styled.fieldset`
     border: black 2px solid;
     width: 900px;
     border-radius: 4px;
-`
+    `
 
 export const InputGroup = styled.div`
     width: 100%;  
@@ -24,11 +24,11 @@ const defaultStyledInput = css`
         height: 35px;
         margin-bottom: 20px;
         text-indent: 5px;
-    &:focus{
-        outline: none;
-        box-shadow: 0px 0px 3px 0px #4878e8;
-    }
-    `
+        &:focus{
+            outline: none;
+            box-shadow: 0px 0px 3px 0px #4878e8;
+        }
+        `
     
 export const Input = styled.input`
     width: 300px;
@@ -40,7 +40,7 @@ export const SelectTipo = styled.select`
     &:hover{
         cursor: pointer;
     }
-`
+    `
 
 export const InputPeso = styled.input`
     width: 140px;
@@ -55,8 +55,8 @@ export const Label = styled.label`
     text-align: right;
     margin-right: 15px;
     width: 200px ;
-
-`
+    
+    `
 
 export const buttonDefaultStyle = css`
     font-size: 1rem;
@@ -71,7 +71,7 @@ export const buttonDefaultStyle = css`
         transition: 0.2s;
         box-shadow: 0px 0px 5px 1px #808080;
     }
-`
+    `
 
 export const ButtonGroup = styled.div`
     display: flex;
@@ -79,7 +79,7 @@ export const ButtonGroup = styled.div`
     gap: 20px;
     margin-top: 20px;
     
-`
+    `
 export const Button = styled.button`
     width: 120px;
     padding: 10px 0 10px 0;
@@ -92,14 +92,21 @@ export const Button = styled.button`
     text-align: center;
     ${buttonDefaultStyle}
     
-`
+    `
 export const CancelButton = styled.button`
     width: 120px;
     background-color: #ec5464 ;
     ${buttonDefaultStyle}
-`
+    `
 export const SaveButton = styled.button`
     width: 100px;
     background-color: #42d4a3;
     ${buttonDefaultStyle}
-`
+    `
+
+export const SuccessMsg = styled.span`
+    color: #23b071;
+    `
+export const Response = styled.div`
+    text-align: center;
+    `

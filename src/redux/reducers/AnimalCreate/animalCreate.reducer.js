@@ -1,21 +1,22 @@
 import * as type from '../../actions/types'
 
 const initialState = {
-    animals: [],
+    response: {},
     loading: false,
-    error: null
+    error: false,
 };
-
-const getAnimalsReducer = function (state=initialState, action){
+const animalCreateReducer= function (state=initialState, action){
     switch (action.type) {
-        case type.GET_ANIMALS_REQUESTED:
-            return {...state, loading:true};
-        case type.GET_ANIMALS_SUCCESS:
-            return {...state, loading: false, animals: action.animals};
-        case type.GET_ANIMALS_FAILED:
-            return {...state, loading: false, error: action.message};
+        case type.SAVE_ANIMAL_REQUESTED:
+           
+            return {...state, loading: true}
+        case type.SAVE_ANIMAL_SUCCESS:
+            return { loading: false, response: action.response};
+        case type.SAVE_ANIMAL_FAILED:
+            console.log(action, "reducer")
+            return { ...state, loading: false, error: action.error};
         default:
             return state;
     }
 }
-export default getAnimalsReducer
+export default animalCreateReducer

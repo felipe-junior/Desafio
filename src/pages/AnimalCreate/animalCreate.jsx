@@ -1,12 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Input, InputPeso, InputDataNascimento, Fieldset, Label, InputGroup, SelectTipo, SaveButton, CancelButton, Form, ButtonGroup, Button} from "./animalCreate.styles";
+import { Input, InputPeso, InputDataNascimento, Fieldset, Label, InputGroup, SelectTipo, SaveButton, CancelButton, Form, ButtonGroup, Button, Response, SuccessMsg} from "./animalCreate.styles";
 import { Link } from "react-router-dom";
-export default function AnimalCreate(){
-    const dispatch = useDispatch()
-    const [animal, setAnimal] = useState({nome: "", tipo: "", peso:0, dataNascimento:""})
+import { saveAnimal } from "../../redux/actions/Animals/animals.action";
+import { ErrorMsg } from "../Animals/animals.style";
+
+
+const showMessage = (status, loading, error)=>{
     
+    if(loading===true)
+        return <span>Salvando...</span>
+    if(error)
+        return <ErrorMsg>No momento o servidor encontra-se inoperante, tente novamente mais tarde</ErrorMsg>
+    if(status >=200 && status <=300)
+        return <SuccessMsg> Animal salvo com sucesso</SuccessMsg>
+    if(status>=300 && status<200)
+    return <ErrorMsg>Ocorreu um erro na solicitação, tente novamente</ErrorMsg> 
+}
+export default function AnimalCreate(){
+    const [animal, setAnimal] = useState({nome: "", tipo: "", peso:0, dataNascimento:""})
+    const response = useSelector(state => state.animalPostResponse.response)
+    const loading= useSelector(state => state.animalPostResponse.loading)
+    const error= useSelector(state => state.animalPostResponse.error)
+    const dispatch = useDispatch()
     
     const handleChange = (e)=>setAnimal(prevState =>{
         return {...prevState, [e.target.name]:e.target.value}
@@ -57,8 +74,13 @@ export default function AnimalCreate(){
                 <CancelButton onClick={(e)=>null}>Cancelar</CancelButton>
                 <SaveButton onClick={(e)=>{
                     e.preventDefault()
+                    dispatch(saveAnimal(animal))
                 }}>Salvar</SaveButton>
             </ButtonGroup>
+
+            <Response>
+                {showMessage(response?.status, loading, error)}
+            </Response>
         </Form>
     )
 }

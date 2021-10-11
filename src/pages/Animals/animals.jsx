@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { useDispatch , useSelector} from "react-redux";
 import { getAllAnimals } from "../../redux/actions/Animals/animals.action";
-import { GET_ANIMAL_ID_SUCCESS } from "../../redux/actions/types";
 
 import { Link } from "react-router-dom";
 import {Wrapper, Button, Table, ErrorMsg} from './animals.style'
@@ -12,7 +11,6 @@ function Animals(){
         return state.animals
     })
     const {loading, error} = animals
-    console.log( error)
     
     useEffect(()=>{
         dispatch(getAllAnimals());
@@ -41,8 +39,8 @@ function Animals(){
                               <td>{animal.nome}</td>
                               <td>{animal.tipo}</td>
                               <td>{animal.peso}</td>
-                              <td><a href="http://">Alterar</a></td>
-                              <td><a href="">Excluir</a></td>
+                              <td><Link>Alterar</Link></td>
+                              <td><Link>Excluir</Link></td>
                           </tr>
                       )
                     })}

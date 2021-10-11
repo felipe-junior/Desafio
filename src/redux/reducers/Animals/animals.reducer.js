@@ -18,10 +18,10 @@ export default function animals (state=initialState, action){
             return {
                 ...state,
                 loading: false,
-                animals: action.animals
+                animals: action.animals,
+                error: null
             }
         case type.GET_ANIMALS_FAILED:
-            console.log(action)
             return {
                 ...state,
                 loading: false,
