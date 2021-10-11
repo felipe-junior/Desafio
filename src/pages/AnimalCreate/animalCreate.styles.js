@@ -2,7 +2,8 @@ import styled, {css} from "styled-components";
 
 export const Form = styled.form`
     margin: 0 auto;
-
+    padding: 20px;
+    
 `
 export const Fieldset = styled.fieldset`
     display: flex;
@@ -13,11 +14,10 @@ export const Fieldset = styled.fieldset`
     border: black 2px solid;
     width: 900px;
     border-radius: 4px;
-    `
+`
 
 export const InputGroup = styled.div`
-    width: 100%;
-    
+    width: 100%;  
     `
 const defaultStyledInput = css`
         border: 2px solid black;
@@ -32,8 +32,7 @@ const defaultStyledInput = css`
     
 export const Input = styled.input`
     width: 300px;
-    ${defaultStyledInput}
-    
+    ${defaultStyledInput} 
     `
 export const SelectTipo = styled.select`
     width: 300px;
@@ -58,12 +57,10 @@ export const Label = styled.label`
     width: 200px ;
 
 `
-export const ButtonGroup = styled.div`
-    text-align: center;
-    margin-top: 20px;
-`
 
-const buttonDefaultStyle = css`
+export const buttonDefaultStyle = css`
+    font-size: 1rem;
+    font-weight: bold;
     display: inline-block;
     height: 40px;
     border-radius: 4px;
@@ -75,8 +72,28 @@ const buttonDefaultStyle = css`
         box-shadow: 0px 0px 5px 1px #808080;
     }
 `
+
+export const ButtonGroup = styled.div`
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    
+`
+export const Button = styled.button`
+    width: 120px;
+    padding: 10px 0 10px 0;
+    background-color: #1b93a7;
+    /* border: 1px solid; */
+    border: 2px solid;
+    color: black;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    text-align: center;
+    ${buttonDefaultStyle}
+    
+`
 export const CancelButton = styled.button`
-    margin-right: 20px;
     width: 120px;
     background-color: #ec5464 ;
     ${buttonDefaultStyle}

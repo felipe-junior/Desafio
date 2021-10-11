@@ -1,29 +1,12 @@
 import styled from 'styled-components'
-
+import {buttonDefaultStyle} from '../AnimalCreate/animalCreate.styles'
 export const Wrapper = styled.div`
    
     max-width: 1080px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 80px;
-`
-export const Button = styled.button`
-    width: 120px;
-    padding: 10px 0 10px 0;
-    background-color: #1b93a7;
-    /* border: 1px solid; */
-    border: 2px solid;
-    box-shadow: 2px 2px 1px 1px;
-    border-radius: 3px;
-    font-weight: bold;
-    font-size: 1rem;
-    margin-bottom: 30px;
-
-    &:hover{
-        cursor: pointer;
-        transform: scale(1.05);
-        transition: 0.2s;
-    }
+    padding: 20px;
+    margin-top: 20px;
 `
 export const Table = styled.table`
     border: 2px solid;
@@ -56,5 +39,24 @@ export const Table = styled.table`
     tr::nth-child(odd){
             background-color: #FFFFFF;
         }
+`
+export const Button = styled.button`
+    width: 120px;
+    padding: 10px 0 10px 0;
+    background-color: #1b93a7;
+    /* border: 1px solid; */
+    border: 2px solid;
+    color: black;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    text-align: center;
+    ${buttonDefaultStyle}
+    
+`
+export const ErrorMsg = styled.span`
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: red;
 `
 

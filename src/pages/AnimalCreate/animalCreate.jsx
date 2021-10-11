@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Input, InputPeso, InputDataNascimento, Fieldset, Label, InputGroup, SelectTipo, SaveButton, CancelButton, Form, ButtonGroup} from "./AnimalForm.styles";
-
-export default function AnimalForm(){
+import { Input, InputPeso, InputDataNascimento, Fieldset, Label, InputGroup, SelectTipo, SaveButton, CancelButton, Form, ButtonGroup, Button} from "./animalCreate.styles";
+import { Link } from "react-router-dom";
+export default function AnimalCreate(){
     const dispatch = useDispatch()
     const [animal, setAnimal] = useState({nome: "", tipo: "", peso:0, dataNascimento:""})
     
@@ -53,6 +53,7 @@ export default function AnimalForm(){
                 </InputGroup>
             </Fieldset>
             <ButtonGroup>
+                <Link to="/animais"><Button>Voltar</Button></Link>
                 <CancelButton onClick={(e)=>null}>Cancelar</CancelButton>
                 <SaveButton onClick={(e)=>{
                     e.preventDefault()
