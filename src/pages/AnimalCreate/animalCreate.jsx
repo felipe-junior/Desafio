@@ -7,44 +7,46 @@ import { saveAnimal, updateAnimal } from "../../redux/actions/Animals/animals.ac
 import { ErrorMsg } from "../Animals/animals.style";
 
 
+
 const showMessage = (status, loading, error)=>{
-    if(loading===true)
-        return <span>Salvando...</span>
-    if(error)
-        return <ErrorMsg>No momento o servidor encontra-se inoperante, tente novamente mais tarde</ErrorMsg>
     if(status >=200 && status <=300)
         return <SuccessMsg> Animal salvo com sucesso</SuccessMsg>
-    if(status>=300 && status<200)
-    return <ErrorMsg>Ocorreu um erro na solicitação, tente novamente</ErrorMsg> 
+    if(loading===true)
+        return <span>Salvando...</span>
+    if(error){
+        if(status===400)
+            return <ErrorMsg>Preencha todos os campos corretamente</ErrorMsg> 
+        return <ErrorMsg>Erro interno</ErrorMsg>
+    }
+    return undefined
 }
 
 
 export default function AnimalCreate(props){
-    const [animal, setAnimal] = useState({nome: "", tipo: "", peso:0, dataNascimento:""})
-    const response = useSelector(state => state.animalPostResponse.response)
-    const loading= useSelector(state => state.animalPostResponse.loading)
-    const error= useSelector(state => state.animalPostResponse.error)
+    const [animal, setAnimal] = useState({nome: "", tipo: "cachorro", peso:0, dataNascimento:""})
+    const response = useSelector(state => state.animals.response)
+    const loading= useSelector(state => state.animals.loading)
+    const error= useSelector(state => state.animals.error)
     const dispatch = useDispatch()
     const location = useLocation()
-    console.log(location.state)
+
     useEffect(()=>{
         if(location.state){
-            const updateAnimal = location.state.animal
-            setAnimal(updateAnimal)
+            const update = location.state.animal
+            setAnimal(update)
         }  
-    }, [])
+    }, [location.state])
    
     
     const handleChange = (e)=>setAnimal(prevState =>{
         return {...prevState, [e.target.name]:e.target.value}
     })
 
-
     return (
 
         <Form action="">
             <Fieldset>
-                <legend style={{marginTop: "-50px;"}}>Animal</legend>
+                <legend >Animal</legend>
                 <InputGroup>
                     <Label htmlFor="nome">Nome</Label>
                     <Input
@@ -56,7 +58,7 @@ export default function AnimalCreate(props){
                 </InputGroup>
                 <InputGroup>
                     <Label htmlFor="tipo" >Tipo</Label>
-                    <SelectTipo onChange={handleChange} name="tipo">
+                    <SelectTipo onChange={handleChange} value="cachorro"name="tipo">
                         <option value="cachorro">cachorro</option>
                         <option value="gato">gato</option>
                     </SelectTipo>
@@ -91,10 +93,11 @@ export default function AnimalCreate(props){
                     else{
                         dispatch(updateAnimal(animal))
                     }
+                    setTimeout(()=>{}, 3000)
                 }}>Salvar</SaveButton>
             </ButtonGroup>
 
-            <Response>
+            <Response {...response}>
                 {showMessage(response?.status, loading, error)}
             </Response>
         </Form>

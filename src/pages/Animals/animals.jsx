@@ -5,6 +5,10 @@ import { deleteAnimal, getAllAnimals } from "../../redux/actions/Animals/animals
 import { Link } from "react-router-dom";
 import {Wrapper, Button, Table, ErrorMsg, Excluir} from './animals.style'
 
+const formatDate = (date)=> {
+    const cutDate = date.slice(0,10)
+    return new Date(cutDate).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
+}
 function Animals(){
     const dispatch = useDispatch()
     const animals = useSelector(state =>{
@@ -15,13 +19,11 @@ function Animals(){
     
     useEffect(()=>{
         dispatch(getAllAnimals());
-    }, [])
+    }, [dispatch])
 
     return (
         <Wrapper>
-           <Link to="/animais/criar"><Button>Criar animal</Button></Link>
-           
-           
+           <Link to="/animais/criar"><Button>Criar animal</Button></Link>          
            <Table>
                <tbody>
                    <tr>
@@ -36,10 +38,10 @@ function Animals(){
                   {animals.animals.map(animal=>{
                       return (
                           <tr key={animal.id}>
-                              <td>{animal.dataNascimento}</td>
+                              <td>{formatDate(animal.dataNascimento)}</td>
                               <td>{animal.nome}</td>
                               <td>{animal.tipo}</td>
-                              <td>{animal.peso}</td>
+                              <td>{animal.peso} kg</td>
                               <td><Link to={{pathname: "/animais/alterar",state:{animal}}}>Alterar</Link></td>
                               <td><Excluir onClick={(e)=>{
                                   e.preventDefault()

@@ -1,9 +1,7 @@
 import { combineReducers } from "redux";
-import animals from "./Animals/animals.reducer"
-import animalCreateReducer from "./AnimalCreate/animalCreate.reducer";
+import animals from "./Animal/animals.reducer"
 const reducers = combineReducers({
     animals,
-    animalPostResponse: animalCreateReducer,
 })
 
 export default reducers

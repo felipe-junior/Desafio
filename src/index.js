@@ -6,7 +6,7 @@ import reportWebVitals from './App/reportWebVitals';
 import { Provider } from 'react-redux'
 import store from './redux/store';
 
-
+document.title = "Desafio estágio"
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

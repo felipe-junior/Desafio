@@ -8,7 +8,7 @@ function* handlerUpdateAnimal(action){
         yield put({type: UPDATE_ANIMAL_ID_SUCCESS, response})
         
     } catch(err){
-        yield put({type: UPDATE_ANIMAL_ID_FAILED, error: err.message})
+        yield put({type: UPDATE_ANIMAL_ID_FAILED, response: err.response})
     }
 }
 

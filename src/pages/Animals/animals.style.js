@@ -40,6 +40,8 @@ export const Table = styled.table`
             background-color: #FFFFFF;
         }
 `
+
+
 export const Button = styled.button`
     width: 120px;
     padding: 10px 0 10px 0;
