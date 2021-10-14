@@ -27,9 +27,6 @@ namespace BackendDesafio.Controllers
         public async Task<IActionResult> Post([FromBody] Animal animal)
         {
             var result = await  _animalService.Create(animal);
-
-
-
             return Created("api/[controller]/{animal.Id}", animal);
         }
 
@@ -41,7 +38,6 @@ namespace BackendDesafio.Controllers
             {
                 return NotFound();
             }
-
             return animal;
         }
 
