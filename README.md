@@ -7,6 +7,7 @@ O código é dividido em duas partes, o backend feito em Asp.net/c# e o frontend
 
 Para o rodar a aplicação:
 
+Depois de clonado o repositório
 - Na pasta backend:  
   - `dotnet restore`
   - `dotnet run`
