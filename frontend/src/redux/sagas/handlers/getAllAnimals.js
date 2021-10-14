@@ -7,7 +7,7 @@ function* handleGetAllAnimals(){
         const animals = yield call(getAllAnimals) //dado da promise
         yield put({type: GET_ANIMALS_SUCCESS, animals: animals}) //put recebe a action
     } catch (error) {
-        yield put({type: GET_ANIMALS_FAILED, response: error.response})
+        yield put({type: GET_ANIMALS_FAILED, response: error.response, error: true})
     }
 }
 
