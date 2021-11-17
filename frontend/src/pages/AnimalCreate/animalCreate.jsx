@@ -24,16 +24,16 @@ const showMessage = (status, loading, error)=>{
 
 export default function AnimalCreate(props){
     const [animal, setAnimal] = useState({nome: "", tipo: "cachorro", peso:0, dataNascimento:""})
-    const response = useSelector(state => state.animals.response)
-    const loading= useSelector(state => state.animals.loading)
-    const error= useSelector(state => state.animals.error)
+    const response = useSelector(state => state.animalsReducer.response)
+    const loading= useSelector(state => state.animalsReducer.loading)
+    const error= useSelector(state => state.animalsReducer.error)
     const dispatch = useDispatch()
     const location = useLocation()
 
     useEffect(()=>{
         if(location.state){
-            const update = location.state.animal
-            setAnimal(update)
+            const updatedAnimal = location.state.animal
+            setAnimal(updatedAnimal)
         }  
     }, [location.state])
    

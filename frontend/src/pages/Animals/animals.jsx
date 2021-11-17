@@ -11,11 +11,11 @@ const formatDate = (date)=> {
 }
 function Animals(){
     const dispatch = useDispatch()
-    const animals = useSelector(state =>{
-        return state.animals
+    const animalsReducer = useSelector(state =>{
+        return state.animalsReducer
     })
     
-    const {loading, error} = animals
+    const {loading, error} = animalsReducer
     
     useEffect(()=>{
         dispatch(getAllAnimals());
@@ -35,7 +35,7 @@ function Animals(){
                        <th>Excluir</th>
                    </tr>
 
-                  {animals.animals.map(animal=>{
+                  {animalsReducer.animals.map(animal=>{
                       return (
                           <tr key={animal.id}>
                               <td>{formatDate(animal.dataNascimento)}</td>

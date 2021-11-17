@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import animals from "./Animal/animals.reducer"
 const reducers = combineReducers({
-    animals,
+    animalsReducer: animals,
 })
 
 export default reducers

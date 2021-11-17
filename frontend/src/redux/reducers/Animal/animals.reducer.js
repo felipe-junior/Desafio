@@ -14,6 +14,7 @@ export default function animals(state = initialState, action) {
             return {
                 ...state,
                 loading: true,
+                error: false          
             }
         case type.GET_ANIMALS_SUCCESS:
             return {
@@ -30,7 +31,7 @@ export default function animals(state = initialState, action) {
             }
 
         case type.DELETE_ANIMAL_ID_REQUESTED:
-            return { ...state, loading: true }
+            return { ...state, loading: true, error: false }
 
         case type.DELETE_ANIMAL_ID_SUCCESS:
             const newAnimals = state.animals.filter(animal => animal.id !== action.payload.id)
