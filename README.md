@@ -7,6 +7,11 @@ O código é dividido em duas partes, o backend feito em Asp.net/c# e o frontend
 
 Para o rodar a aplicação:
 
-- Na pasta backend: `dotnet run`
-- Na pasta frontend: `yarn start`
+Depois de clonado o repositório
+- Na pasta backend:  
+  - `dotnet restore`
+  - `dotnet run`
+- Na pasta frontend: 
+  - `yarn install`
+  - `yarn start`
 
