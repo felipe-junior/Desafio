@@ -3,30 +3,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { Input, InputPeso, InputDataNascimento, Fieldset, Label, InputGroup, SelectTipo, SaveButton, CancelButton, Form, ButtonGroup, Button, Response, SuccessMsg} from "./animalCreate.styles";
 import { Link } from "react-router-dom";
-import { saveAnimal, updateAnimal } from "../../redux/actions/Animals/animals.action";
+import { updateAnimal,postAnimal, statusConsts } from "../../redux/slice/animal.slice";
 import { ErrorMsg } from "../Animals/animals.style";
 
 
 
-const showMessage = (status, loading, error)=>{
-    if(status >=200 && status <=300)
-        return <SuccessMsg> Animal salvo com sucesso</SuccessMsg>
-    if(loading===true)
+const showMessage = (status)=>{
+    
+    if(status===statusConsts.LOADING)
         return <span>Salvando...</span>
-    if(error){
-        if(status===400)
-            return <ErrorMsg>Preencha todos os campos corretamente</ErrorMsg> 
-        return <ErrorMsg>Erro interno</ErrorMsg>
-    }
-    return undefined
+    if(status===statusConsts.ERROR)
+        return <ErrorMsg>Erro ao salvar os dados.</ErrorMsg> 
+    if(status === statusConsts.SUCCESS)
+        return <SuccessMsg> Animal salvo com sucesso</SuccessMsg>
+    
+        return undefined
+    
 }
 
 
 export default function AnimalCreate(props){
     const [animal, setAnimal] = useState({nome: "", tipo: "cachorro", peso:0, dataNascimento:""})
-    const response = useSelector(state => state.animalsReducer.response)
-    const loading= useSelector(state => state.animalsReducer.loading)
-    const error= useSelector(state => state.animalsReducer.error)
+    const status = useSelector(state => state.animals.status)
     const dispatch = useDispatch()
     const location = useLocation()
 
@@ -89,7 +87,7 @@ export default function AnimalCreate(props){
                 <SaveButton onClick={(e)=>{
                     e.preventDefault()
                     if(!location.state)
-                        dispatch(saveAnimal(animal))
+                        dispatch(postAnimal(animal))
                     else{
                         dispatch(updateAnimal(animal))
                     }
@@ -97,8 +95,8 @@ export default function AnimalCreate(props){
                 }}>Salvar</SaveButton>
             </ButtonGroup>
 
-            <Response {...response}>
-                {showMessage(response?.status, loading, error)}
+            <Response >
+                {showMessage(status)}
             </Response>
         </Form>
     )

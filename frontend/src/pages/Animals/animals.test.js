@@ -8,6 +8,7 @@ import storeMock from '../../redux/store'
 import animalsReducer from '../../redux/reducers/Animal/animals.reducer'
 
 describe('Teste no componente animais', ()=>{
+    
     test('Se a mensagem carregando está aparecendo', ()=>{
         render(
             <Provider store={storeMock}>
@@ -16,6 +17,7 @@ describe('Teste no componente animais', ()=>{
                 </BrowserRouter>
             </Provider>
         )
+        
         expect(screen.queryByText(/Loading/)).not.toBeNull()
     })
 })

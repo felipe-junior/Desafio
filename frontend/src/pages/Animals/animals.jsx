@@ -1,9 +1,10 @@
 import React, { useEffect} from "react";
 import { useDispatch , useSelector} from "react-redux";
-import { deleteAnimal, getAllAnimals } from "../../redux/actions/Animals/animals.action";
 
 import { Link } from "react-router-dom";
 import {Wrapper, Button, Table, ErrorMsg, Excluir} from './animals.style'
+import { getAnimals, deleteAnimalById, selectAllAnimals, statusConsts } from "../../redux/slice/animal.slice";
+
 
 const formatDate = (date)=> {
     const cutDate = date.slice(0,10)
@@ -11,15 +12,17 @@ const formatDate = (date)=> {
 }
 function Animals(){
     const dispatch = useDispatch()
-    const animalsReducer = useSelector(state =>{
-        return state.animalsReducer
-    })
-    
-    const {loading, error} = animalsReducer
-    
+    const animals = useSelector(selectAllAnimals)
+    const status = useSelector(state => state.animals.status)
     useEffect(()=>{
-        dispatch(getAllAnimals());
-    }, [dispatch])
+      dispatch(getAnimals())
+    }, [])
+    useEffect(()=>{
+
+    }, [animals])
+    useEffect(()=>{
+
+    }, [status])
 
     return (
         <Wrapper>
@@ -35,7 +38,7 @@ function Animals(){
                        <th>Excluir</th>
                    </tr>
 
-                  {animalsReducer.animals.map(animal=>{
+                  {animals.map(animal=>{
                       return (
                           <tr key={animal.id}>
                               <td>{formatDate(animal.dataNascimento)}</td>
@@ -45,7 +48,7 @@ function Animals(){
                               <td><Link to={{pathname: "/animais/alterar",state:{animal}}}>Alterar</Link></td>
                               <td><Excluir onClick={(e)=>{
                                   e.preventDefault()
-                                  dispatch(deleteAnimal({id: animal.id}))
+                                  dispatch(deleteAnimalById(animal.id))
 
                               }}>Excluir</Excluir></td>
                           </tr>
@@ -53,8 +56,8 @@ function Animals(){
                     })}
                </tbody>
            </Table>
-            {loading? <p>Loading...</p>:  undefined}
-            {error? <ErrorMsg>Erro ao se conectar com o servidor, tente mais tarde</ErrorMsg>: undefined}
+            {status===statusConsts.LOADING? <p>Carregando...</p>:  undefined}
+            {status===statusConsts.ERROR? <ErrorMsg>Algo de errado aconteceu</ErrorMsg>: undefined}
        </Wrapper>
     )
 }

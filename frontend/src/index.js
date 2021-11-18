@@ -4,7 +4,7 @@ import './index.css';
 import App from './App/App';
 import reportWebVitals from './App/reportWebVitals';
 import { Provider } from 'react-redux'
-import store from './redux/store';
+import {store} from './redux/store';
 
 document.title = "Desafio estágio"
 ReactDOM.render(
