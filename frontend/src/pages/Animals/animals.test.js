@@ -2,10 +2,10 @@ import {render, screen} from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
-import types from '../../redux/actions/types'
 import Animals from '../Animals/animals'
 import storeMock from '../../redux/store'
 import animalsReducer from '../../redux/reducers/Animal/animals.reducer'
+import { useReducer } from 'react'
 
 describe('Teste no componente animais', ()=>{
     
@@ -33,3 +33,4 @@ describe('Teste no animalsReducer', ()=>{
         expect(animalsReducer(undefined, {})).toEqual(expectedState)
     })
 })
+function animalsReducer(state=inicialstate, action)

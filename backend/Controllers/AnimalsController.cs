@@ -20,12 +20,14 @@ namespace BackendDesafio.Controllers
 
         [HttpGet]
         public ActionResult<List<Animal>> Get() { 
+            System.Console.WriteLine("Passou");
             return _animalService.GetAnimals();
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Animal animal)
         {
+            System.Console.WriteLine("Passou");
             var result = await  _animalService.Create(animal);
             return Created("api/[controller]/{animal.Id}", animal);
         }
