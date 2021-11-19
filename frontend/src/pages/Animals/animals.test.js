@@ -5,8 +5,12 @@ import animalsReducer from '../../redux/slice/animal.slice'
 import { render, screen } from '@testing-library/react'
 import {httpGetAnimals, httpPostAnimal, httpUpdateAnimal, httpDeleteAnimal} from '../../utils/requests'
 import Animals from './animals'
+import {createMemoryHistory} from 'history'
 import { Provider } from 'react-redux'
-import { BrowserRouter, MemoryRouter } from 'react-router-dom'
+    import { MemoryRouter, BrowserRouter as Router } from 'react-router-dom'
+import { Wrapper } from './animals.style'
+import AnimalCreate from '../AnimalCreate/animalCreate'
+import userEvent from '@testing-library/user-event'
 
 jest.mock('../../utils/requests', ()=>({
     httpGetAnimals: jest.fn(),
@@ -90,6 +94,7 @@ describe('Animals slice',  ()=>{
         expect(store.getState().animals.status).toEqual(statusConsts.ERROR)
     })
     test('if dispatch postAnimal was rejected and ErrorMsg is visible', async ()=>{
+        const history = createMemoryHistory({ initialEntries: ["/"] });
         const animal = {
             nome: "totó",
             tipo: "cachorro",
@@ -99,9 +104,18 @@ describe('Animals slice',  ()=>{
         httpPostAnimal.mockImplementation(()=>{
             return Promise.reject({})
         })
-        await store.dispatch(postAnimal(animal))
         
-       //TODO
+        const animalCreate = render(
+            <Provider store={store}>
+           <Router history={history}>
+                <AnimalCreate></AnimalCreate>
+           </Router>
+       </Provider>
+       )
+       await store.dispatch(postAnimal(animal))
+       //userEvent.click({})
+     
+       expect(screen.queryByText(/Erro ao salvar os dados/i)).not.toBeNull()
     })
 
     test('if dispatch update is fullfiled', async ()=>{
@@ -116,5 +130,24 @@ describe('Animals slice',  ()=>{
         await store.dispatch(updateAnimal(1))
         expect(store.getState().animals.status).toEqual(statusConsts.SUCCESS)
         expect(store.getState().animals.entities["1"]).toEqual({...updatedAnimal, id: 1})
+    })
+
+    test('if dispatch update is loading', async ()=>{
+        const history = createMemoryHistory({ initialEntries: ["/"] });
+        const updatedAnimal = {
+            id: 1,
+            nome: "totó",
+            tipo: "",
+            dataNascimento: Date.now(),
+            peso: 10.0
+        }      
+        
+        const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+        httpUpdateAnimal.mockImplementation(()=> wait(3000))
+        store.dispatch(updateAnimal(1))
+        expect(store.getState().animals.status).toEqual(statusConsts.LOADING)
+    })
+    test('if dispatch update is failed', async ()=>{
+        //todo
     })
 })

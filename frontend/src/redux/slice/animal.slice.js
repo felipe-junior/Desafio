@@ -42,8 +42,8 @@ export const animalsSlice = createSlice({
     extraReducers: {
         [getAnimals.fulfilled]: (state, action) =>{
             state.status = statusConsts.SUCCESS
-            console.log(action);
-            animalsAdapter.setAll(state, action.payload)
+            if(action.payload)
+                animalsAdapter.setAll(state, action.payload)
         },
         [getAnimals.pending]: (state, action) =>{
             state.status = statusConsts.LOADING
@@ -53,7 +53,6 @@ export const animalsSlice = createSlice({
         },
         [deleteAnimalById.fulfilled]: (state, action) =>{
             const id = action.payload
-            console.log(action.payload);
             state.status = statusConsts.SUCCESS
             animalsAdapter.removeOne(state, id)
         },
@@ -77,7 +76,6 @@ export const animalsSlice = createSlice({
         },
         [updateAnimal.fulfilled]: (state, action) =>{
             const animal = action.payload
-            console.log(animal, "Animal");
             state.status = statusConsts.SUCCESS
             animalsAdapter.removeOne(state, animal.id)
             animalsAdapter.addOne(state, animal)
