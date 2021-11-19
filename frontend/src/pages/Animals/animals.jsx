@@ -18,7 +18,6 @@ function Animals(){
       dispatch(getAnimals())
     }, [])
     useEffect(()=>{
-
     }, [animals])
     useEffect(()=>{
 
@@ -41,7 +40,7 @@ function Animals(){
                   {animals.map(animal=>{
                       return (
                           <tr key={animal.id}>
-                              <td>{formatDate(animal.dataNascimento)}</td>
+                              <td>{animal.dataNascimento}</td>
                               <td>{animal.nome}</td>
                               <td>{animal.tipo}</td>
                               <td>{animal.peso} kg</td>

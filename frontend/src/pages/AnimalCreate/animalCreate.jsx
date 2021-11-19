@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { Input, InputPeso, InputDataNascimento, Fieldset, Label, InputGroup, SelectTipo, SaveButton, CancelButton, Form, ButtonGroup, Button, Response, SuccessMsg} from "./animalCreate.styles";
 import { Link } from "react-router-dom";
-import { updateAnimal,postAnimal, statusConsts } from "../../redux/slice/animal.slice";
+import { updateAnimal,postAnimal, statusConsts, setStatus } from "../../redux/slice/animal.slice";
 import { ErrorMsg } from "../Animals/animals.style";
 
 
@@ -35,7 +35,9 @@ export default function AnimalCreate(props){
         }  
     }, [location.state])
    
-    
+    useEffect(()=>{
+        dispatch(setStatus(statusConsts.EMPTY))
+    }, [])
     const handleChange = (e)=>setAnimal(prevState =>{
         return {...prevState, [e.target.name]:e.target.value}
     })

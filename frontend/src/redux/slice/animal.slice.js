@@ -1,6 +1,6 @@
 import {createSlice, createEntityAdapter, createAsyncThunk} from '@reduxjs/toolkit'
 import api from '../../utils/api'
-
+import {httpGetAnimals, httpDeleteAnimal, httpPostAnimal, httpUpdateAnimal} from '../../utils/requests'
 const animalsAdapter = createEntityAdapter()
 
 export const statusConsts = {
@@ -16,32 +16,28 @@ const initialState = animalsAdapter.getInitialState({
 
 //Requests
 export const getAnimals = createAsyncThunk('animals/getAnimals', async ()=>{
-    return  api.get("/animals").then(response => response.data)
-    .catch(err => {throw err})
+    return httpGetAnimals()
 })
 
 export const  deleteAnimalById = createAsyncThunk('animals/deleteAnimalById',async (id)=>{
-        api.delete(`/animals/${id}`).then(response=>response.data).catch(error =>{ throw error})
+        httpDeleteAnimal(id)
         return id
 })
 
 export const postAnimal =createAsyncThunk('animals/postAnimal', async (animal) =>{
-    return api.post("/animals", animal).then(response => response.data)
-    .catch(err=>{throw err})
+    return httpPostAnimal(animal)
 })
 
 export const updateAnimal= createAsyncThunk('animals/updateAnimal', async (animal) =>{
-    const {id} = animal 
-    return api.put(`/animals/${id}`, animal).then(response => response)
-    .catch(err=>{throw err})
+
+    return httpUpdateAnimal(animal)
 })
 
 export const animalsSlice = createSlice({
     name: 'animals',
     initialState,
     reducers: {
-       
-        
+        setStatus: (state, action) => {state.status = action.payload}
     },
     extraReducers: {
         [getAnimals.fulfilled]: (state, action) =>{
@@ -56,7 +52,8 @@ export const animalsSlice = createSlice({
             state.status = statusConsts.ERROR
         },
         [deleteAnimalById.fulfilled]: (state, action) =>{
-            const {id} = action.payload
+            const id = action.payload
+            console.log(action.payload);
             state.status = statusConsts.SUCCESS
             animalsAdapter.removeOne(state, id)
         },
@@ -68,7 +65,6 @@ export const animalsSlice = createSlice({
         },
         [postAnimal.fulfilled]: (state, action) =>{
             const animal = action.payload
-            console.log(animal, "Animal");
             state.status = statusConsts.SUCCESS
             animalsAdapter.addOne(state, animal)
             
@@ -83,6 +79,7 @@ export const animalsSlice = createSlice({
             const animal = action.payload
             console.log(animal, "Animal");
             state.status = statusConsts.SUCCESS
+            animalsAdapter.removeOne(state, animal.id)
             animalsAdapter.addOne(state, animal)
             
         },
@@ -94,9 +91,8 @@ export const animalsSlice = createSlice({
         }  
     }  
 })
-
-export default animalsSlice.reducer
-
+export const { setStatus } = animalsSlice.actions
+export default animalsSlice.reducer 
 export const {
      selectAll: selectAllAnimals,
      selectById: selectAnimalById

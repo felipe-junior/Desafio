@@ -1,36 +1,21 @@
-import {render, screen} from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { Provider } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
-import Animals from '../Animals/animals'
-import storeMock from '../../redux/store'
-import animalsReducer from '../../redux/reducers/Animal/animals.reducer'
-import { useReducer } from 'react'
+import {configureStore} from '@reduxjs/toolkit'
+import {getAnimals} from  '../../redux/slice/animal.slice'
+import animalsReducer from '../../redux/slice/animal.slice'
+import { render, screen } from '@testing-library/react'
 
-describe('Teste no componente animais', ()=>{
-    
-    test('Se a mensagem carregando está aparecendo', ()=>{
-        render(
-            <Provider store={storeMock}>
-                <BrowserRouter>
-                    <Animals></Animals>
-                </BrowserRouter>
-            </Provider>
-        )
+
+
+let store = configureStore({
+    reducer:{
+        animals: animalsReducer
+    }
+})
+describe('Teste no componente animais',  ()=>{
+
+    test('Resposta da requisição get animals', async ()=>{
         
-        expect(screen.queryByText(/Loading/)).not.toBeNull()
+        
+        await store.dispatch(getAnimals());
     })
 })
-
-describe('Teste no animalsReducer', ()=>{
-    it('deveria retornar o estado inicial igual o `expectedState`', ()=>{
-        const expectedState = {
-            animals: [],
-            loading: false,
-            error: false,
-            response: {}
-        }
-        expect(animalsReducer(undefined, {})).toEqual(expectedState)
-    })
-})
-function animalsReducer(state=inicialstate, action)
