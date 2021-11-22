@@ -20,7 +20,11 @@ export const getAnimals = createAsyncThunk('animals/getAnimals', async ()=>{
 })
 
 export const  deleteAnimalById = createAsyncThunk('animals/deleteAnimalById',async (id)=>{
-        httpDeleteAnimal(id)
+        try{
+            httpDeleteAnimal(id)
+        } catch(e){
+
+        }
         return id
 })
 

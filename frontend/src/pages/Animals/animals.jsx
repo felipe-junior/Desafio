@@ -4,7 +4,7 @@ import { useDispatch , useSelector} from "react-redux";
 import { Link } from "react-router-dom";
 import {Wrapper, Button, Table, ErrorMsg, Excluir} from './animals.style'
 import { getAnimals, deleteAnimalById, selectAllAnimals, statusConsts } from "../../redux/slice/animal.slice";
-
+import { LinhaTabelaAnimals } from "./LinhaTabelaAnimals";
 
 const formatDate = (date)=> {
     const cutDate = date.slice(0,10)
@@ -36,23 +36,8 @@ function Animals(){
                        <th>Alterar</th>
                        <th>Excluir</th>
                    </tr>
-
-                  {animals.map(animal=>{
-                      return (
-                          <tr key={animal.id}>
-                              <td>{animal.dataNascimento}</td>
-                              <td>{animal.nome}</td>
-                              <td>{animal.tipo}</td>
-                              <td>{animal.peso} kg</td>
-                              <td><Link to={{pathname: "/animais/alterar",state:{animal}}}>Alterar</Link></td>
-                              <td><Excluir onClick={(e)=>{
-                                  e.preventDefault()
-                                  dispatch(deleteAnimalById(animal.id))
-
-                              }}>Excluir</Excluir></td>
-                          </tr>
-                      )
-                    })}
+                   <LinhaTabelaAnimals animals={animals}></LinhaTabelaAnimals>
+    
                </tbody>
            </Table>
             {status===statusConsts.LOADING? <p>Carregando...</p>:  undefined}

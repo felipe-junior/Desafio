@@ -91,6 +91,7 @@ export default function AnimalCreate(props){
                     if(!location.state)
                         dispatch(postAnimal(animal))
                     else{
+                        console.log(animal)
                         dispatch(updateAnimal(animal))
                     }
                     setTimeout(()=>{}, 3000)
