@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import { createMemoryHistory } from 'history'
 
-import animalsReducer, { deleteAnimalById } from '../../redux/slice/animal.slice'
+import animalsReducer, { deleteAnimalById, selectAllAnimals } from '../../redux/slice/animal.slice'
 import { getAnimals, postAnimal, statusConsts, updateAnimal } from '../../redux/slice/animal.slice'
 import { httpGetAnimals, httpPostAnimal, httpUpdateAnimal, httpDeleteAnimal } from '../../utils/requests'
 import Animals from './animals'
@@ -209,23 +209,30 @@ describe('Animals slice', () => {
         store.dispatch(deleteAnimalById(id))
         expect(store.getState().animals.status).toEqual(statusConsts.LOADING)
     })
-
-    /*
     
     test('if dispatch delete is failed', async ()=>{
         const newAnimal = { nome: "totó", tipo: "", dataNascimento: Date.now(), peso: 10.0 }
         const id = 1
         //Inserindo animal no store
-        httpDeleteAnimal.mockImplementation(() => Promise.reject());
         httpPostAnimal.mockImplementation(() => Promise.resolve({ ...newAnimal, id: id }))
         await store.dispatch(postAnimal(newAnimal))
         expect(store.getState().animals.status).toEqual(statusConsts.SUCCESS)
         expect(store.getState().animals.entities["1"]).toEqual({ ...newAnimal, id: id })
         
         
-        //Deletando animal no store
+        httpDeleteAnimal.mockImplementation(() => Promise.reject("Algo"));
+       
         await store.dispatch(deleteAnimalById(id))
         expect(store.getState().animals.status).toEqual(statusConsts.ERROR)
     })
-    */
+
+    test('selectAll animals', async () => {
+        //adiciona o projeto na store
+        const newAnimal = { nome: "totó", tipo: "", dataNascimento: Date.now(), peso: 10.0 }
+        httpPostAnimal.mockImplementation(() => Promise.resolve(
+            {...newAnimal, id: 1}
+        ));        
+        await store.dispatch(postAnimal(newAnimal));
+        expect(selectAllAnimals(store.getState())).toEqual([{...newAnimal, id: 1}])
+    })
 })

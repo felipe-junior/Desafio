@@ -20,11 +20,7 @@ export const getAnimals = createAsyncThunk('animals/getAnimals', async ()=>{
 })
 
 export const  deleteAnimalById = createAsyncThunk('animals/deleteAnimalById',async (id)=>{
-        try{
-            httpDeleteAnimal(id)
-        } catch(e){
-
-        }
+        await httpDeleteAnimal(id)
         return id
 })
 
@@ -46,8 +42,7 @@ export const animalsSlice = createSlice({
     extraReducers: {
         [getAnimals.fulfilled]: (state, action) =>{
             state.status = statusConsts.SUCCESS
-            if(action.payload)
-                animalsAdapter.setAll(state, action.payload)
+            animalsAdapter.setAll(state, action.payload)
         },
         [getAnimals.pending]: (state, action) =>{
             state.status = statusConsts.LOADING
@@ -64,6 +59,7 @@ export const animalsSlice = createSlice({
             state.status = statusConsts.LOADING
         },
         [deleteAnimalById.rejected]: (state, action) =>{
+            console.log(action);
             state.status = statusConsts.ERROR
         },
         [postAnimal.fulfilled]: (state, action) =>{

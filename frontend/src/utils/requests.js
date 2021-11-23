@@ -7,7 +7,7 @@ export const httpGetAnimals = async ()=>{
 }
 
 export const  httpDeleteAnimal = async (id)=>{
-    return api.delete(`/animals/${id}`).then(response=>response.data).catch(error =>{ throw error})
+    return api.delete(`/animals/${id}`).then(response=>response.data)
 }
 
 export const httpPostAnimal = async (animal) =>{
@@ -15,6 +15,7 @@ export const httpPostAnimal = async (animal) =>{
 }
 
 export const httpUpdateAnimal= async (animal) =>{
+    console.log(animal);
     const {id} = animal 
     return api.put(`/animals/${id}`, animal).then(response => response).catch(err=>{throw err})
 }

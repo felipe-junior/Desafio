@@ -23,7 +23,7 @@ const showMessage = (status)=>{
 
 
 export default function AnimalCreate(props){
-    const [animal, setAnimal] = useState({nome: "", tipo: "cachorro", peso:0, dataNascimento:""})
+    const [animal, setAnimal] = useState({nome: "", tipo: "cachorro", peso:0, dataNascimento: ''})
     const status = useSelector(state => state.animals.status)
     const dispatch = useDispatch()
     const location = useLocation()
@@ -38,9 +38,10 @@ export default function AnimalCreate(props){
     useEffect(()=>{
         dispatch(setStatus(statusConsts.EMPTY))
     }, [])
-    const handleChange = (e)=>setAnimal(prevState =>{
-        return {...prevState, [e.target.name]:e.target.value}
-    })
+    const handleChange = (e) =>{
+        let {name, value} = e.target
+        setAnimal({ ...animal, [name]: value})
+      }
 
     return (
 
@@ -58,7 +59,7 @@ export default function AnimalCreate(props){
                 </InputGroup>
                 <InputGroup>
                     <Label htmlFor="tipo" >Tipo</Label>
-                    <SelectTipo onChange={handleChange} value="cachorro"name="tipo">
+                    <SelectTipo onChange={handleChange} name="tipo">
                         <option value="cachorro">cachorro</option>
                         <option value="gato">gato</option>
                     </SelectTipo>
