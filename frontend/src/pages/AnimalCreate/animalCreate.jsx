@@ -1,24 +1,21 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { Input, InputPeso, InputDataNascimento, Fieldset, Label, InputGroup, SelectTipo, SaveButton, CancelButton, Form, ButtonGroup, Button, Response, SuccessMsg} from "./animalCreate.styles";
 import { Link } from "react-router-dom";
-import { updateAnimal,postAnimal, statusConsts, setStatus } from "../../redux/slice/animal.slice";
+import { updateAnimal,postAnimal, setStatus, selectAnimalById } from "../../redux/slice/animal.slice";
 import { ErrorMsg } from "../Animals/animals.style";
+import { statusConsts } from "../../redux/slice/statusConsts";
 
 
-
-const showMessage = (status)=>{
-    
+const showMessage = (status)=>{ 
     if(status===statusConsts.LOADING)
         return <span>Salvando...</span>
     if(status===statusConsts.ERROR)
         return <ErrorMsg>Erro ao salvar os dados.</ErrorMsg> 
     if(status === statusConsts.SUCCESS)
         return <SuccessMsg> Animal salvo com sucesso</SuccessMsg>
-    
-        return undefined
-    
+    return undefined
 }
 
 
@@ -27,16 +24,14 @@ export default function AnimalCreate(props){
     const status = useSelector(state => state.animals.status)
     const dispatch = useDispatch()
     const location = useLocation()
-
-    useEffect(()=>{
-        if(location.state){
-            const updatedAnimal = location.state.animal
-            setAnimal(updatedAnimal)
-        }  
-    }, [location.state])
+    const {id}= useParams()
+    const animalFound = useSelector(state => selectAnimalById(state, id))
    
     useEffect(()=>{
         dispatch(setStatus(statusConsts.EMPTY))
+        if(animalFound){
+            setAnimal(animalFound)      
+        }  
     }, [])
     const handleChange = (e) =>{
         let {name, value} = e.target
@@ -85,17 +80,15 @@ export default function AnimalCreate(props){
                 </InputGroup>
             </Fieldset>
             <ButtonGroup>
-                <Link to="/animais"><Button>Voltar</Button></Link>
-                <Link to="/animais"><CancelButton>Cancelar</CancelButton></Link>
-                <SaveButton onClick={(e)=>{
+                <Link to="/animais" id="voltarLinkContainer"><Button id="voltarButton">Voltar</Button></Link>
+                <Link to="/animais" id="cancelLinkContainer"><CancelButton id="cancelButton">Cancelar</CancelButton></Link>
+                <SaveButton id="saveButton" onClick={(e)=>{
                     e.preventDefault()
-                    if(!location.state)
+                    if(!id)
                         dispatch(postAnimal(animal))
                     else{
-                        console.log(animal)
                         dispatch(updateAnimal(animal))
                     }
-                    setTimeout(()=>{}, 3000)
                 }}>Salvar</SaveButton>
             </ButtonGroup>
 

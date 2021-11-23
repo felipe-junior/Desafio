@@ -15,7 +15,7 @@ function App() {
               <Route path="/" exact component={Animals}></Route>
               <Route path="/animais" exact component={Animals}></Route>
               <Route path="/animais/criar" component={AnimalCreate}></Route>
-              <Route path="/animais/alterar" component={AnimalCreate}></Route>
+              <Route path="/animais/alterar/:id" component={AnimalCreate}></Route>
             </Switch>
        
       </div> 

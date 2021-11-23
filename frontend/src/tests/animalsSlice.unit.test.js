@@ -1,18 +1,16 @@
 import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
-import { MemoryRouter, BrowserRouter as Router } from 'react-router-dom'
+import { MemoryRouter, Router } from 'react-router-dom'
 import { configureStore } from '@reduxjs/toolkit'
 import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import { createMemoryHistory } from 'history'
-
-import animalsReducer, { deleteAnimalById, selectAllAnimals } from '../../redux/slice/animal.slice'
-import { getAnimals, postAnimal, statusConsts, updateAnimal } from '../../redux/slice/animal.slice'
-import { httpGetAnimals, httpPostAnimal, httpUpdateAnimal, httpDeleteAnimal } from '../../utils/requests'
-import Animals from './animals'
-import AnimalCreate from '../AnimalCreate/animalCreate'
-
-jest.mock('../../utils/requests', () => ({
+import animalsReducer, { deleteAnimalById, selectAllAnimals } from '../redux/slice/animal.slice'
+import { getAnimals, postAnimal, updateAnimal } from '../redux/slice/animal.slice'
+import { httpGetAnimals, httpPostAnimal, httpUpdateAnimal, httpDeleteAnimal } from '../utils/requests'
+import AnimalCreate from '../pages/AnimalCreate/animalCreate'
+import { statusConsts } from '../redux/slice/statusConsts'
+jest.mock('../utils/requests', () => ({
     httpGetAnimals: jest.fn(),
     httpPostAnimal: jest.fn(),
     httpUpdateAnimal: jest.fn(),

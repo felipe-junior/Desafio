@@ -3,8 +3,9 @@ import { useDispatch , useSelector} from "react-redux";
 
 import { Link } from "react-router-dom";
 import {Wrapper, Button, Table, ErrorMsg, Excluir} from './animals.style'
-import { getAnimals, deleteAnimalById, selectAllAnimals, statusConsts } from "../../redux/slice/animal.slice";
-import { LinhaTabelaAnimals } from "./LinhaTabelaAnimals";
+import { getAnimals, deleteAnimalById, selectAllAnimals} from "../../redux/slice/animal.slice";
+import { LinhaTabelaAnimals } from "./ListagemAnimals";
+import { statusConsts } from "../../redux/slice/statusConsts";
 
 const formatDate = (date)=> {
     const cutDate = date.slice(0,10)

@@ -16,7 +16,7 @@ export const LinhaTabelaAnimals = ({animals})=>{
                     <td>{animal.nome}</td>
                     <td>{animal.tipo}</td>
                     <td>{animal.peso} kg</td>
-                    <td><Link to={{pathname: "/animais/alterar",state:{animal}}}>Alterar</Link></td>
+                    <td><Link to={{pathname: `/animais/alterar/${animal.id}`}}>Alterar</Link></td>
                     <td><Excluir onClick={(e)=>{
                         e.preventDefault()
                         dispatch(deleteAnimalById(animal.id))

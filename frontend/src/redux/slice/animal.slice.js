@@ -1,14 +1,8 @@
 import {createSlice, createEntityAdapter, createAsyncThunk} from '@reduxjs/toolkit'
 import api from '../../utils/api'
 import {httpGetAnimals, httpDeleteAnimal, httpPostAnimal, httpUpdateAnimal} from '../../utils/requests'
+import { statusConsts } from './statusConsts'
 const animalsAdapter = createEntityAdapter()
-
-export const statusConsts = {
-    LOADING: 'loading',
-    SUCCESS: 'success',
-    ERROR: 'error',
-    EMPTY: 'empty'
-}
 const initialState = animalsAdapter.getInitialState({
     status: statusConsts.EMPTY
 })
