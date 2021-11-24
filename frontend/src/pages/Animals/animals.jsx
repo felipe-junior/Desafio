@@ -7,11 +7,7 @@ import { getAnimals, deleteAnimalById, selectAllAnimals} from "../../redux/slice
 import { LinhaTabelaAnimals } from "./ListagemAnimals";
 import { statusConsts } from "../../redux/slice/statusConsts";
 
-const formatDate = (date)=> {
-    const cutDate = date.slice(0,10)
-    return new Date(cutDate).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
-}
-function Animals(){
+export default function Animals(){
     const dispatch = useDispatch()
     const animals = useSelector(selectAllAnimals)
     const status = useSelector(state => state.animals.status)
@@ -47,4 +43,3 @@ function Animals(){
     )
 }
 
-export default Animals
