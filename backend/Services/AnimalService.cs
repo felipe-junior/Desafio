@@ -15,8 +15,9 @@ namespace BackendDesafio.Services
             IMongoDatabase database = client.GetDatabase(settings.DatabaseName);
             _animals = database.GetCollection<Animal>(settings.AnimalsCollectionName);
         }
+        public AnimalService(){}
 
-        public List<Animal> GetAnimals() 
+        public virtual List<Animal> GetAnimals() 
         {   
             var animals = _animals.Find(animal => true).ToList();
             animals.Reverse();
