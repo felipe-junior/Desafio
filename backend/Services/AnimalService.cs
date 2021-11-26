@@ -25,18 +25,18 @@ namespace BackendDesafio.Services
             
         }
 
-        public async Task<Animal> Create(Animal animal){
+        public virtual async Task<Animal> Create(Animal animal){
             //_animals.InsertOne(animal);
             await _animals.InsertOneAsync(animal);
             return animal;
         }
-         public Animal Get(string id) =>
+         public virtual Animal Get(string id) =>
             _animals.Find<Animal>(animal => animal.Id == id).FirstOrDefault();
-        public void Update(string id, Animal newAnimal){
+        public virtual void Update(string id, Animal newAnimal){
            
             _animals.ReplaceOne(animal=> animal.Id ==id, newAnimal);
         }
-        public void Delete(Animal animalTarget){
+        public virtual void Delete(Animal animalTarget){
             var result = _animals.DeleteOne(animal => animal.Id == animalTarget.Id);
             
         }

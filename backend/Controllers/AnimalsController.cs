@@ -1,6 +1,7 @@
 using BackendDesafio.Models;
 using BackendDesafio.Services;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -20,8 +21,12 @@ namespace BackendDesafio.Controllers
 
         [HttpGet]
         public ActionResult<List<Animal>> Get() { 
-            System.Console.WriteLine("Passou");
-            return _animalService.GetAnimals();
+            try{
+                var animals = _animalService.GetAnimals();
+            } catch (Exception e){
+                return StatusCode(500); 
+            }
+            return Ok(_animalService.GetAnimals());
         }
 
         [HttpPost]
